@@ -40,14 +40,20 @@ public class CinemaService {
                 if(c.getName()!=null){
                     ce.get().setName(c.getName());
                 }
-                if(c.getCapacity()!=null){
-                    ce.get().setCapacity(c.getCapacity());
-                }
                 if(c.getOwner()!=null){
                     ce.get().setOwner(c.getOwner());
                 }
+                if(c.getCapacity()!=null){
+                    ce.get().setCapacity(c.getCapacity());
+                }
+                if(c.getDescription()!=null){
+                    ce.get().setDescription(c.getDescription());
+                }
                 if(c.getCategory()!=null){
                     ce.get().setCategory(c.getCategory());
+                }
+                if(c.getMessages()!=null){
+                    ce.get().setMessages(c.getMessages());
                 }
                 cinemaRepository.save(ce.get());
                 return ce.get();
