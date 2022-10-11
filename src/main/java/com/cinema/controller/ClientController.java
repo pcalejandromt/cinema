@@ -8,9 +8,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,14 +33,24 @@ public class ClientController {
     }
     
     @GetMapping("/{id}")
-    public Optional<Client> getClient(@PathVariable("id") int clientId){
-        return clientService.getClient(clientId);        
+    public Optional<Client> getClient(@PathVariable("id") int id){
+        return clientService.getClient(id);        
     }
     
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public Client save(@RequestBody Client c){
         return clientService.save(c);
+    }
+    
+    @PutMapping("/update")
+    public Client update(@RequestBody Client c){
+        return clientService.update(c);
+    }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Boolean deleteClient(@PathVariable("id") int id){
+        return clientService.deleteClient(id);
     }
     
 }

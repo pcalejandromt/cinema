@@ -23,6 +23,10 @@ public class MessageRepository {
         return messageCrudRepository.findById(id);
     }
     
+    public Message update(Message m){
+        return messageCrudRepository.save(m);
+    }
+    
     public Message save(Message m){
         return messageCrudRepository.save(m);
     }

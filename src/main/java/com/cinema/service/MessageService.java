@@ -21,17 +21,48 @@ public class MessageService {
         return messageRepository.getMessage(id);
     }
 
-    public Message save(Message m) {
-        if(m.getIdMessage()==null){
-            return messageRepository.save(m);
-        }else {
-            Optional<Message> m1=messageRepository.getMessage(m.getIdMessage());
-            if(m1.isEmpty()){
-                return messageRepository.save(m);
-            }else{
+    public Message update(Message m) {
+        if (m.getIdMessage() != null) {
+            Optional<Message> om = messageRepository.getMessage(m.getIdMessage());
+            if (!om.isEmpty()) {
+                if (m.getMessageText() != null) {
+                    om.get().setMessageText(m.getMessageText());
+                }
+                if (m.getClient() != null) {
+                    om.get().setClient(m.getClient());
+                }
+                if (m.getCinema() != null) {
+                    om.get().setCinema(m.getCinema());
+                }
+                messageRepository.save(om.get());
+                return om.get();
+            } else {
                 return m;
             }
-        }       
-        
+        }
+        return m;
+
+    }
+
+    public Message save(Message m) {
+        if (m.getIdMessage() == null) {
+            return messageRepository.save(m);
+        } else {
+            Optional<Message> m1 = messageRepository.getMessage(m.getIdMessage());
+            if (m1.isEmpty()) {
+                return messageRepository.save(m);
+            } else {
+                return m;
+            }
+        }
+
+    }
+    public Boolean deleteMessage(int id){
+        Optional<Message> om = getMessage(id);
+        if(om.isPresent()){
+            messageRepository.delete(om.get());
+            return true;
+        }
+        return false;
     }
 }

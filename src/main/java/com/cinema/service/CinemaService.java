@@ -61,12 +61,11 @@ public class CinemaService {
     
     public boolean deleteCinema(int id){
         //Boolean aBoolean = getCinema(id).map(Cinema ->{cinemaRepository.delete(Cinema);return true;}).orElse(other: false);
-        Boolean aBoolean =false;
-        Optional<Cinema> c= cinemaRepository.getCinema(id);
-        if(c.isPresent()){
-            cinemaRepository.delete(c.get());
-            aBoolean=true;
+        Optional<Cinema> oc= getCinema(id);
+        if(oc.isPresent()){
+            cinemaRepository.delete(oc.get());
+            return true;
         }
-        return aBoolean;
+        return false;
     }
 }
