@@ -20,56 +20,56 @@ public class CinemaService {
         return cinemaRepository.getCinema(id);
     }
     
-    public Cinema save(Cinema c){
-        if(c.getId()==null){
-            return cinemaRepository.save(c);
+    public Cinema save(Cinema cinema){
+        if(cinema.getId()==null){
+            return cinemaRepository.save(cinema);
         }else{
-            Optional ce = cinemaRepository.getCinema(c.getId()); // Trae el cinemaRepo con Id leido
-            if(ce.isPresent()){
-                return c;
+            Optional<Cinema> ce = cinemaRepository.getCinema(cinema.getId()); // Trae el cinemaRepo con Id leido
+            if(ce.isEmpty()){
+                return cinemaRepository.save(cinema);                
             }else{
-                return cinemaRepository.save(c);
+                return cinema;
             }    
         }
     }
     
-    public Cinema update(Cinema c){
-        if(c.getId()!=null){
-            Optional<Cinema> ce = cinemaRepository.getCinema(c.getId());
-            if(!ce.isEmpty()){
-                if(c.getName()!=null){
-                    ce.get().setName(c.getName());
+    public Cinema update(Cinema cinema){
+        if(cinema.getId()!=null){
+            Optional<Cinema> optionalCinema = cinemaRepository.getCinema(cinema.getId());
+            if(!optionalCinema.isEmpty()){
+                if(cinema.getName()!=null){
+                    optionalCinema.get().setName(cinema.getName());
                 }
-                if(c.getOwner()!=null){
-                    ce.get().setOwner(c.getOwner());
+                if(cinema.getOwner()!=null){
+                    optionalCinema.get().setOwner(cinema.getOwner());
                 }
-                if(c.getCapacity()!=null){
-                    ce.get().setCapacity(c.getCapacity());
+                if(cinema.getCapacity()!=null){
+                    optionalCinema.get().setCapacity(cinema.getCapacity());
                 }
-                if(c.getDescription()!=null){
-                    ce.get().setDescription(c.getDescription());
+                if(cinema.getDescription()!=null){
+                    optionalCinema.get().setDescription(cinema.getDescription()); //*
                 }
-                if(c.getCategory()!=null){
-                    ce.get().setCategory(c.getCategory());
+                if(cinema.getCategory()!=null){
+                    optionalCinema.get().setCategory(cinema.getCategory());
                 }
-                if(c.getMessages()!=null){
-                    ce.get().setMessages(c.getMessages());
+                if(cinema.getMessages()!=null){
+                    optionalCinema.get().setMessages(cinema.getMessages());
                 }
-                cinemaRepository.save(ce.get());
-                return ce.get();
+                cinemaRepository.save(optionalCinema.get());
+                return optionalCinema.get();
             }else{
-                return c;
+                return cinema;
             }
         }else{
-            return c;
+            return cinema;
         }
     }    
     
     public boolean deleteCinema(int id){
         //Boolean aBoolean = getCinema(id).map(Cinema ->{cinemaRepository.delete(Cinema);return true;}).orElse(other: false);
-        Optional<Cinema> oc= getCinema(id);
-        if(oc.isPresent()){
-            cinemaRepository.delete(oc.get());
+        Optional<Cinema> optionalCinema= getCinema(id);
+        if(optionalCinema.isPresent()){
+            cinemaRepository.delete(optionalCinema.get());
             return true;
         }
         return false;
