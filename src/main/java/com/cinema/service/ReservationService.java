@@ -20,17 +20,18 @@ public class ReservationService {
     public Optional<Reservation> getReservation(int id) {
         return reservationRepository.getReservation(id);
     }
-
-    public Reservation save(Reservation r) {
-        if (r.getIdReservation() == null) {
-            return reservationRepository.save(r);
-        } else if (r.getCinema().getId() == null) {
-            return r;
-        } else if (r.getClient().getIdClient() == null) {
-            return r;
+    
+    public Reservation save(Reservation reservation) {
+        if (reservation.getIdReservation() == null) {
+            return reservationRepository.save(reservation);
+        } else {
+            Optional<Reservation> optionalreservation = reservationRepository.getReservation(reservation.getIdReservation());
+            if(optionalreservation.isEmpty()){
+                return reservationRepository.save(reservation);
+            } else {
+                return reservation;
+            }
         }
-        return reservationRepository.save(r);
-
     }
 
     public Reservation update(Reservation r) {

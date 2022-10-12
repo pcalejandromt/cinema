@@ -23,7 +23,7 @@ public class CategoryService {
     
     public boolean deleteCategory(int id){
        Optional<Category> oc=getCategory(id);
-       if(!oc.isEmpty()){
+       if(oc.isPresent()){
            categoryRepository.delete(oc.get());
            return true;
        }
@@ -56,10 +56,10 @@ public class CategoryService {
             return categoryRepository.save(c);
         } else {
             Optional ce = categoryRepository.getCategory(c.getId());
-            if (ce.isPresent()) {
-                return c;
+            if (ce.isEmpty()) {
+                return categoryRepository.save(c);                
             } else {
-                return categoryRepository.save(c);
+                return c;
             }
         }
     }
