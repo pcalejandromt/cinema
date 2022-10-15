@@ -33,18 +33,18 @@ public class Reservation implements Serializable {
     private Date devolutionDate;
     
     @Column(name="status",nullable=false,length = 20 )
-    String status="created";
+    String status="created"; //Posibles opciones: created, cancelled, completed
     
-    @ManyToOne//(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="id")
     @JsonIgnoreProperties({"reservations"}) //"messages",
     private Cinema cinema;
 
     
     
-    @ManyToOne//(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="idClient")
-    @JsonIgnoreProperties({"messages","reservations"})
+    @JsonIgnoreProperties({"messages","reservations"}) //,"reservations"
     private Client client;
     
     @Column(name="score")
